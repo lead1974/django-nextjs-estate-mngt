@@ -28,5 +28,14 @@ pip install --upgrade setuptools
 # start django server
 python manage.py runserver
 
+# create django apps
+mkdir core_apps/__init__.py
+python manage.py startapp users
+python manage.py startapp common
+python manage.py startapp profiles
+python manage.py startapp posts
+python manage.py startapp issues
+python manage.py startapp ratings
+
 
 
