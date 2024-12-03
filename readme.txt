@@ -51,6 +51,11 @@ docker compose -f local.yml up --build -d --remove-orphans
 # check docker volumes
 docker volume inspect api_estate_prod_postgres_data
 
+# makefiles
+sudo apt update
+sudo apt install make
+
+
 
 
 
