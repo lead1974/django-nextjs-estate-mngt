@@ -37,5 +37,20 @@ python manage.py startapp posts
 python manage.py startapp issues
 python manage.py startapp ratings
 
+python manage.py runserver
+
+# docker setup
+# check local.yml file for docker
+docker compose -f local.yml config
+# docker create network
+docker network create estate_prod_nw  
+output: d60d87eb4503891f0d866e86765f1c49f6cbcd2e39f58c14efea8e2a63d07600
+# build images 
+DOCKER_BUILDKIT=1 docker compose -f local.yml build --no-cache
+docker compose -f local.yml up --build -d --remove-orphans
+# check docker volumes
+docker volume inspect api_estate_prod_postgres_data
+
+
 
 
