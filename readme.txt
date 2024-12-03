@@ -13,6 +13,9 @@ django-admin startproject config .
 git config --global user.email "email2lead@gmail.com"
 git config --global user.name "lead1974"
 
+# check git files for ignore
+git ls-files --other --exclude-standard
+
 pipenv install --dev psycopg2-binary==2.9.9 watchfiles==0.21.0 black==24.3.0
 
 # building requirements
