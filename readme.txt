@@ -58,6 +58,12 @@ docker volume inspect api_estate_prod_postgres_data
 sudo apt update
 sudo apt install make
 
+# make superuser
+docker compose -f local.yml run --rm api python manage.py createsuperuser
+
+# generate secret key for .env.SIGNING_KEY
+python -c "import secrets; print(secrets.token_urlsafe(38))"
+
 
 
 
