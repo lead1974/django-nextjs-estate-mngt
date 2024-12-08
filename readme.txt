@@ -3,6 +3,9 @@ pipenv -rm
 pipenv install
 pipenv graph
 
+# check if social already installed
+pipenv run pip list | grep -E "djoser|social-auth"
+
 # generate .gitignore file
 npx gitignore python
 #initialize git
