@@ -67,6 +67,20 @@ docker compose -f local.yml run --rm api python manage.py createsuperuser
 # generate secret key for .env.SIGNING_KEY
 python -c "import secrets; print(secrets.token_urlsafe(38))"
 
+# 54 Building Apartment Model
+docker compose -f local.yml run --rm api python manage.py startapp apartments
+
+# move new apartment module into core_apps
+cd /home/balda/labweb_ubuntu/nextjs/estate-mngt
+sudo chmod +777 -R /home/balda/labweb_ubuntu/nextjs/estate-mngt
+mv apartments core_apps
+
+# run migrations
+make makemigrations OR
+docker compose -f local.yml run --rm api python manage.py makemigrations
+make migrate OR
+docker compose -f local.yml run --rm api python manage.py migrate
+
 
 
 
