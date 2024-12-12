@@ -215,7 +215,7 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "core_apps.common.cookie_auth.CookieAuthentication",
     ),
-    "DEFAULT_PERMISSION_CLASSES": "rest_framework.permissions.IsAuthenticated",
+    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "DEFAULT_FILTER_BACKENDS": [
         "django_filters.rest_framework.DjangoFilterBackend",
