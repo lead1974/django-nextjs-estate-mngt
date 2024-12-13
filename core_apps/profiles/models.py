@@ -5,6 +5,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django_countries.fields import CountryField
 from phonenumber_field.modelfields import PhoneNumberField
+from django.db.models import Avg
 
 from core_apps.common.models import TimeStampedModel
 
@@ -17,19 +18,52 @@ def get_user_username(instance: "Profile") -> str:
 
 class Profile(TimeStampedModel):
     class Gender(models.TextChoices):
-        MALE = ("male", _("Male"))
-        FEMALE = ("female", _("Female"))
-        OTHER = ("other", _("Other"))
+        MALE = (
+            "male",
+            _("Male"),
+        )
+        FEMALE = (
+            "female",
+            _("Female"),
+        )
+        OTHER = (
+            "other",
+            _("Other"),
+        )
 
     class Occupation(models.TextChoices):
-        Mason = ("mason", _("Mason"))
-        Carpenter = ("carpenter", _("Carpenter"))
-        Plumber = ("plumber", _("Plumber"))
-        Roofer = ("roofer", _("Roofer"))
-        Painter = ("painter", _("Painter"))
-        Electrician = ("electrician", _("Electrician"))
-        HVAC = ("hvac", _("HVAC"))
-        TENANT = ("tenant", _("Tenant"))
+        Mason = (
+            "mason",
+            _("Mason"),
+        )
+        Carpenter = (
+            "carpenter",
+            _("Carpenter"),
+        )
+        Plumber = (
+            "plumber",
+            _("Plumber"),
+        )
+        Roofer = (
+            "roofer",
+            _("Roofer"),
+        )
+        Painter = (
+            "painter",
+            _("Painter"),
+        )
+        Electrician = (
+            "electrician",
+            _("Electrician"),
+        )
+        HVAC = (
+            "hvac",
+            _("HVAC"),
+        )
+        TENANT = (
+            "tenant",
+            _("Tenant"),
+        )
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
     avatar = CloudinaryField(verbose_name=_("Avatar"), blank=True, null=True)
@@ -57,6 +91,9 @@ class Profile(TimeStampedModel):
     reputation = models.IntegerField(verbose_name=_("Reputation"), default=100)
     slug = AutoSlugField(populate_from=get_user_username, unique=True)
 
+    def __str__(self) -> str:
+        return f"{self.user.first_name}'s Profile"
+
     @property
     def is_banned(self) -> bool:
         return self.report_count >= 5
@@ -67,3 +104,7 @@ class Profile(TimeStampedModel):
     def save(self, *args, **kwargs):
         self.update_reputation()
         super().save(*args, **kwargs)
+
+    def get_average_rating(self):
+        average = self.user.received_ratings.aggregate(Avg("rating"))["rating__avg"]
+        return average if average is not None else 0.0

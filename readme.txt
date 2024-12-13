@@ -3,6 +3,17 @@ pipenv -rm
 pipenv install
 pipenv graph
 
+# working iwith python shell
+docker compose -f local.yml run --rm api python manage.py shell
+# script to activate user enter line by line:
+from django.contrib.auth import get_user_model
+User = get_user_model()
+user = User.objects.get(username='balda')
+user.is_active = True
+user.save()
+print(f"User '{user.username}' has been enabled.")
+
+
 # check if social already installed
 pipenv run pip list | grep -E "djoser|social-auth"
 
