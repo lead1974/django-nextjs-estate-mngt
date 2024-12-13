@@ -81,6 +81,12 @@ docker compose -f local.yml run --rm api python manage.py makemigrations
 make migrate OR
 docker compose -f local.yml run --rm api python manage.py migrate
 
+# 62 Building Reports Model
+docker compose -f local.yml run --rm api python manage.py startapp reports
+# once models.py is complete
+make makemigrations
+make migrate
+
 
 
 
