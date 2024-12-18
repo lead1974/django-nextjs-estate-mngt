@@ -3,6 +3,9 @@ pipenv -rm
 pipenv install
 pipenv graph
 
+# npm upgrade
+npm i -g npm@latest
+
 # working iwith python shell
 docker compose -f local.yml run --rm api python manage.py shell
 # script to activate user enter line by line:
@@ -97,6 +100,15 @@ docker compose -f local.yml run --rm api python manage.py startapp reports
 # once models.py is complete
 make makemigrations
 make migrate
+
+#80 section for nextjs
+cd client
+npm i -D eslint-config-standard@17.1.0 eslint-plugin-tailwindcss@3.14.1 eslint-config-pret
+tier@9.1.0 prettier@3.2.4 sharp@0.33.2
+
+#80 nextjs packages
+npm i @heroicons/react 
+npx shadcn@latest init -d --verbose
 
 
 
