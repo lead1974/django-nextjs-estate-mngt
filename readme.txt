@@ -110,6 +110,8 @@ tier@9.1.0 prettier@3.2.4 sharp@0.33.2
 npm i @heroicons/react 
 npx shadcn@latest init -d --verbose
 
+#83 dark/light themes
+npm i next-themes
 
 
 
