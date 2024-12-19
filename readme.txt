@@ -6,6 +6,10 @@ pipenv graph
 # npm upgrade
 npm i -g npm@latest
 
+# docker start from Powershel las administrator: 
+net start com.docker.service
+
+
 # working iwith python shell
 docker compose -f local.yml run --rm api python manage.py shell
 # script to activate user enter line by line:
@@ -113,6 +117,9 @@ npx shadcn@latest init -d --verbose
 #83 dark/light themes
 npm i next-themes
 
+#85 shadcn components
+npx shadcn-ui@latest add dropwdown-menu badge button avatar form card input label menubar pagination skeleton sheet tabs textarea select
 
+npm install @radix-ui/react-icons
 
 
