@@ -18,6 +18,11 @@ FROM base as node-run-stage
 ARG APP_HOME=/app
 WORKDIR ${APP_HOME}
 
+# Add these environment variables
+ENV WATCHPACK_POLLING=true
+ENV CHOKIDAR_USEPOLLING=true
+ENV NEXT_TELEMETRY_DISABLED=1
+
 COPY --from=node-build-stage /node_modules ./node_modules
 
 COPY . ${APP_HOME}

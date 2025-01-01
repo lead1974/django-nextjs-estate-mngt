@@ -1,10 +1,10 @@
 # frequently used commands
+docker compose -f local.yml restart client 
 docker compose -f local.yml up --build -d --remove-orphans
 docker compose -f local.yml down
 docker compose -f local.yml logs
 
-# First remove the existing client container
-# Stop and remove the client container
+# First stop and remove the existing client container
 docker compose -f local.yml stop client
 docker compose -f local.yml rm -f client
 
