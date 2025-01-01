@@ -1,8 +1,27 @@
+# frequently used commands
+docker compose -f local.yml up --build -d --remove-orphans
+docker compose -f local.yml down
+docker compose -f local.yml logs
+
+# First remove the existing client container
+# Stop and remove the client container
+docker compose -f local.yml stop client
+docker compose -f local.yml rm -f client
+
+# Remove the node_modules volume (if it exists)
+docker volume rm estate_client_node_modules
+
+# Rebuild with no cache
+docker compose -f local.yml build --no-cache client
+
+# Start it again
+docker compose -f local.yml up -d client
+
+
 # pipenv
 pipenv -rm 
 pipenv install
 pipenv graph
-test github
 
 # npm upgrade
 npm i -g npm@latest
@@ -119,7 +138,7 @@ npx shadcn@latest init -d --verbose
 npm i next-themes
 
 #85 shadcn components
-npx shadcn-ui@latest add dropwdown-menu badge button avatar form card input label menubar pagination skeleton sheet tabs textarea select
+npx shadcn@latest add dropdown-menu badge button avatar form card input label menubar pagination skeleton sheet tabs textarea select
 
 npm install @radix-ui/react-icons
 
