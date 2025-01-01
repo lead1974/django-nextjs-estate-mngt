@@ -2,6 +2,7 @@
 pipenv -rm 
 pipenv install
 pipenv graph
+test github
 
 # npm upgrade
 npm i -g npm@latest
