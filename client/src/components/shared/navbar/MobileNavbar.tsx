@@ -6,6 +6,8 @@ import {
 	SheetContent,
 	SheetFooter,
 	SheetTrigger,
+	SheetTitle,
+	SheetDescription,
 } from "@/components/ui/sheet";
 import { leftNavLinks } from "@/constants";
 import { HomeModernIcon } from "@heroicons/react/24/solid";
@@ -58,6 +60,11 @@ export default function MobileNavbar() {
 				/>
 			</SheetTrigger>
 			<SheetContent side="left" className="bg-baby_rich border-none">
+				<SheetTitle className="sr-only">Navigation Menu</SheetTitle>
+				<SheetDescription className="sr-only">
+					Mobile navigation menu for Alpha Apartments
+				</SheetDescription>
+
 				<Link href="/" className="flex items-center gap-1">
 					<HomeModernIcon className="mr-2 size-11 text-lime-500" />
 					<p className="h2-bold text-baby_veryBlack font-robotoSlab">

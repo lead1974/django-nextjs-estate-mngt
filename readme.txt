@@ -19,7 +19,7 @@ docker compose -f local.yml up -d client
 
 
 # pipenv
-pipenv -rm 
+pipenv --rm 
 pipenv install
 pipenv graph
 
