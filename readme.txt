@@ -127,6 +127,17 @@ make migrate
 
 #80 section for nextjs
 cd client
+Remove-Item -Recurse -Force node_modules
+Remove-Item package-lock.json
+npm cache clean --force
+npm install
+npm audit fix --force
+npm run build
+cd ..
+docker compose -f local.yml up --build client -d
+OR
+docker compose -f local.yml up --build -d --remove-orphans
+
 npm i -D eslint-config-standard@17.1.0 eslint-plugin-tailwindcss@3.14.1 eslint-config-pret
 tier@9.1.0 prettier@3.2.4 sharp@0.33.2
 
