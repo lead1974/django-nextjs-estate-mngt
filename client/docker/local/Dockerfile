@@ -18,7 +18,6 @@ FROM base as node-run-stage
 ARG APP_HOME=/app
 WORKDIR ${APP_HOME}
 
-# Add these environment variables
 ENV WATCHPACK_POLLING=true
 ENV CHOKIDAR_USEPOLLING=true
 ENV NEXT_TELEMETRY_DISABLED=1
@@ -27,10 +26,15 @@ COPY --from=node-build-stage /node_modules ./node_modules
 
 COPY . ${APP_HOME}
 
+# First create the user and group
 RUN addgroup -g 1001 -S nodejs && \
   adduser -S nextjs -u 1001 -G nodejs
 
-RUN chown -R nextjs:nodejs ${APP_HOME}
+# Then create .next directory and set permissions
+RUN mkdir -p .next && \
+  chown -R nextjs:nodejs ${APP_HOME}/.next && \
+  chmod -R 755 ${APP_HOME}/.next && \
+  chown -R nextjs:nodejs ${APP_HOME}
 
 USER nextjs
 

@@ -42,13 +42,13 @@ services:
     ports:
       - "8025:8025"
       - "1025:1025"
-    volumes:  
+    volumes:
       - estate_prod_mailpit_data:/data
     environment:
       MP_MAX_MESSAGES: 5000
       MP_DATA_FILE: /data/mailpit.db
       MP_SMTP_AUTH_ACCEPT_ANY: 1
-      MP_SMTP_AUTH_ALLOW_INSECURE: 1  
+      MP_SMTP_AUTH_ALLOW_INSECURE: 1
     networks:
       - estate_prod_nw
 
@@ -63,11 +63,12 @@ services:
     expose:
       - "3000"
     volumes:
-      - ./client:/app
+      - ./client:/app:delegated
       - /app/node_modules
+      - /app/.next
     networks:
       - estate_prod_nw
-      
+
   redis:
     image: redis:7.0-alpine3.19
     command: redis-server --appendonly yes
@@ -111,7 +112,7 @@ services:
     depends_on:
       - api
     networks:
-      - estate_prod_nw    
+      - estate_prod_nw
 
 networks:
   estate_prod_nw:
@@ -122,4 +123,3 @@ volumes:
   estate_prod_mailpit_data: {}
   logs_store: {}
   estate_redis_prod_data: {}
-

@@ -1,7 +1,7 @@
 "use client";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Contact2Icon, MailIcon, UserCheck2 } from "lucide-react";
+import { Contact2Icon, MailIcon, UserCheck2, LockIcon } from "lucide-react";
 import { useRegisterUserMutation } from "@/lib/redux/features/auth/authApiSlice";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -101,6 +101,7 @@ export default function RegisterForm() {
 					errors={errors}
 					placeholder="Password"
 					isPassword={true}
+					startIcon={<LockIcon className="dark:text-babyPowder size-8" />}
 				/>
 
 				<FormFieldComponent
@@ -110,6 +111,7 @@ export default function RegisterForm() {
 					errors={errors}
 					placeholder="Confirm Password"
 					isPassword={true}
+					startIcon={<LockIcon className="dark:text-babyPowder size-8" />}
 				/>
 				<Button
 					type="submit"

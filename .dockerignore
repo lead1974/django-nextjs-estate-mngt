@@ -1,12 +1,4 @@
-.next/
-.git/
-*.pyc
-*.pyo
-__pycache__/
-.idea
-.vscode
-venv/
-.venv/
-*.log
-staticfiles/
-.envs/*
+node_modules
+.next
+.git
+.env*
