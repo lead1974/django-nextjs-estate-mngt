@@ -5,6 +5,7 @@ import React from "react";
 import "./globals.css";
 
 import ReduxProvider from "@/lib/redux/provider";
+import Toast from "@/components/shared/Toast";
 
 export const metadata: Metadata = {
 	title: "Create Next App",
@@ -19,6 +20,7 @@ export default function RootLayout({
 	return (
 		<html lang="en" suppressHydrationWarning>
 			<body className={`${openSans.variable} ${robotoSlab.variable}`}>
+				<Toast />
 				<ReduxProvider>
 					<ThemeProvider
 						attribute="class"
