@@ -6,10 +6,8 @@ import {
 	SheetContent,
 	SheetFooter,
 	SheetTrigger,
-	SheetTitle,
-	SheetDescription,
 } from "@/components/ui/sheet";
-import { leftNavLinks } from "@/constants";
+import { useAuthNavigation } from "@/hooks";
 import { HomeModernIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import Link from "next/link";
@@ -17,9 +15,11 @@ import { usePathname } from "next/navigation";
 
 function LeftNavContent() {
 	const pathname = usePathname();
+
+	const { filteredNavLinks } = useAuthNavigation();
 	return (
 		<section className="flex h-full flex-col gap-6 pt-16">
-			{leftNavLinks.map((linkItem) => {
+			{filteredNavLinks.map((linkItem) => {
 				const isActive =
 					(pathname.includes(linkItem.path) && linkItem.path.length > 1) ||
 					pathname === linkItem.path;
@@ -48,6 +48,7 @@ function LeftNavContent() {
 }
 
 export default function MobileNavbar() {
+	const { handleLogout, isAuthenticated } = useAuthNavigation();
 	return (
 		<Sheet>
 			<SheetTrigger asChild className="cursor-pointer">
@@ -60,11 +61,6 @@ export default function MobileNavbar() {
 				/>
 			</SheetTrigger>
 			<SheetContent side="left" className="bg-baby_rich border-none">
-				<SheetTitle className="sr-only">Navigation Menu</SheetTitle>
-				<SheetDescription className="sr-only">
-					Mobile navigation menu for Alpha Apartments
-				</SheetDescription>
-
 				<Link href="/" className="flex items-center gap-1">
 					<HomeModernIcon className="mr-2 size-11 text-lime-500" />
 					<p className="h2-bold text-baby_veryBlack font-robotoSlab">
@@ -79,16 +75,27 @@ export default function MobileNavbar() {
 
 					<SheetClose asChild>
 						<SheetFooter>
-							<Link href="/register">
-								<Button className="electricIndigo-gradient small-medium light-border-2 btn-tertiary text-babyPowder mt-4 min-h-[41px] w-full rounded-lg border px-4 py-3 shadow-none">
-									Register
+							{isAuthenticated ? (
+								<Button
+									onClick={handleLogout}
+									className="lime-gradient small-medium light-border-2 btn-tertiary text-baby_richBlack min-h-[41px] w-full rounded-lg border px-4 py-3 shadow-none"
+								>
+									Logout
 								</Button>
-							</Link>
-							<Link href="/login">
-								<Button className="lime-gradient small-medium light-border-2 btn-tertiary text-babyPowder min-h-[41px] w-full rounded-lg border px-4 py-3 shadow-none">
-									Login
-								</Button>
-							</Link>
+							) : (
+								<>
+									<Link href="/register">
+										<Button className="electricIndigo-gradient small-medium light-border-2 btn-tertiary text-babyPowder mt-4 min-h-[41px] w-full rounded-lg border px-4 py-3 shadow-none">
+											Register
+										</Button>
+									</Link>
+									<Link href="/login">
+										<Button className="lime-gradient small-medium light-border-2 btn-tertiary text-babyPowder min-h-[41px] w-full rounded-lg border px-4 py-3 shadow-none">
+											Login
+										</Button>
+									</Link>
+								</>
+							)}
 						</SheetFooter>
 					</SheetClose>
 				</div>
