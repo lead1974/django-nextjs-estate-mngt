@@ -21,9 +21,9 @@ export const registerUserSchema = z
 		email: z.string().trim().email({ message: "Enter a valid email address" }),
 		password: z
 			.string()
-			.min(8, { message: "Password must be at least 8 characters long" }),
-		re_password: z.string().min(8, {
-			message: "Confirm Password must be at least 8 characters long",
+			.min(4, { message: "Password must be at least 4 characters long" }),
+		re_password: z.string().min(4, {
+			message: "Confirm Password must be at least 4 characters long",
 		}),
 	})
 	.refine((data) => data.password === data.re_password, {

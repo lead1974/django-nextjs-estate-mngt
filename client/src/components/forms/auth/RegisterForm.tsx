@@ -64,7 +64,7 @@ export default function RegisterForm() {
 					register={register}
 					errors={errors}
 					placeholder="Username"
-					startIcon={<UserCheck2 className="dark:text-babyPowder size-8" />}
+					endIcon={<UserCheck2 className="dark:text-babyPowder size-8" />}
 				/>
 
 				<FormFieldComponent
@@ -73,7 +73,7 @@ export default function RegisterForm() {
 					register={register}
 					errors={errors}
 					placeholder="First Name"
-					startIcon={<Contact2Icon className="dark:text-babyPowder size-8" />}
+					endIcon={<Contact2Icon className="dark:text-babyPowder size-8" />}
 				/>
 
 				<FormFieldComponent
@@ -82,7 +82,7 @@ export default function RegisterForm() {
 					register={register}
 					errors={errors}
 					placeholder="Last Name"
-					startIcon={<Contact2Icon className="dark:text-babyPowder size-8" />}
+					endIcon={<Contact2Icon className="dark:text-babyPowder size-8" />}
 				/>
 
 				<FormFieldComponent
@@ -91,7 +91,7 @@ export default function RegisterForm() {
 					register={register}
 					errors={errors}
 					placeholder="Email Address"
-					startIcon={<MailIcon className="dark:text-babyPowder size-8" />}
+					endIcon={<MailIcon className="dark:text-babyPowder size-8" />}
 				/>
 
 				<FormFieldComponent
@@ -101,7 +101,7 @@ export default function RegisterForm() {
 					errors={errors}
 					placeholder="Password"
 					isPassword={true}
-					startIcon={<LockIcon className="dark:text-babyPowder size-8" />}
+					endIcon={<LockIcon className="dark:text-babyPowder size-8" />}
 				/>
 
 				<FormFieldComponent
@@ -111,7 +111,7 @@ export default function RegisterForm() {
 					errors={errors}
 					placeholder="Confirm Password"
 					isPassword={true}
-					startIcon={<LockIcon className="dark:text-babyPowder size-8" />}
+					endIcon={<LockIcon className="dark:text-babyPowder size-8" />}
 				/>
 				<Button
 					type="submit"

@@ -1,8 +1,19 @@
+# python virtual environmnet
+pipenv install : to create virtual environmnet
+pipenv shell : to activate virtual environmnet
+# as example to add python packege
+pip install django-jazzmin
+# to remove virtual environmnet
+pipenv --rm
+
+
 # frequently used commands
-docker compose -f local.yml restart client 
-docker compose -f local.yml up --build -d --remove-orphans
 docker compose -f local.yml down
+docker compose -f local.yml up -d
+
+docker compose -f local.yml up --build -d --remove-orphans
 docker compose -f local.yml logs
+docker compose -f local.yml restart client 
 
 # First stop and remove the existing client container
 docker compose -f local.yml stop client
