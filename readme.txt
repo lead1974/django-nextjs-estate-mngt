@@ -15,6 +15,9 @@ docker compose -f local.yml up --build -d --remove-orphans
 docker compose -f local.yml logs
 docker compose -f local.yml restart client 
 
+# if django config file changed:
+docker compose -f local.yml restart api
+
 # First stop and remove the existing client container
 docker compose -f local.yml stop client
 docker compose -f local.yml rm -f client
