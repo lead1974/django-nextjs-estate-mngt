@@ -271,27 +271,40 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
     "openid",
 ]
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_EXTRA_DATA = ["first_name", "last_name"]
-
 SOCIAL_AUTH_PIPELINE = [
-    "social_core.pipeline.social_auth.social_details",
-    "social_core.pipeline.social_auth.social_uid",
-    "social_core.pipeline.social_auth.auth_allowed",
-    "social_core.pipeline.social_auth.social_user",
-    "social_core.pipeline.user.create_user",
-    "social_core.pipeline.social_auth.associate_user",
-    "social_core.pipeline.social_auth.load_extra_data",
-    "social_core.pipeline.user.user_details",
-    "core_apps.profiles.pipeline.save_profile",
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.social_auth.auth_allowed',
+    'social_core.pipeline.social_auth.social_user',
+    'social_core.pipeline.user.get_username',
+    'core_apps.users.pipeline.create_user',
+    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.social_auth.load_extra_data',
+    'social_core.pipeline.user.user_details',
 ]
-
-# Additional settings for social authentication
-SOCIAL_AUTH_URL_NAMESPACE = 'social'
 
 AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',
     'social_core.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
 ]
+
+# Get domain from environment
+DOMAIN = getenv("DOMAIN", "localhost:8080")
+PROTOCOL = "https" if getenv("NODE_ENV") == "production" else "http"
+BASE_URL = f"{PROTOCOL}://{DOMAIN}"
+
+SOCIAL_AUTH_ALLOWED_REDIRECT_URIS = [
+    f"{BASE_URL}/api/v1/auth/google",
+]
+
+# Update other social auth URLs to use BASE_URL
+SOCIAL_AUTH_LOGIN_URL = f"{BASE_URL}/login"
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = f"{BASE_URL}/welcome"
+SOCIAL_AUTH_LOGIN_ERROR_URL = f"{BASE_URL}/login"
+
+# JWT Integration
+SOCIAL_AUTH_GOOGLE_OAUTH2_AUTH_EXTRA_ARGUMENTS = {'access_type': 'offline'}
+SOCIAL_AUTH_GOOGLE_OAUTH2_IGNORE_DEFAULT_SCOPE = True
 
 # Jazzmin Settings
 JAZZMIN_SETTINGS = {

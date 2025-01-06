@@ -27,6 +27,7 @@ urlpatterns = [
     path(settings.ADMIN_URL, admin.site.urls),
     path("api/v1/auth/", include("djoser.urls")),
     path("api/v1/auth/", include("core_apps.users.urls")),
+    path("api/v1/auth/", include("social_django.urls")),
     path("api/v1/profiles/", include("core_apps.profiles.urls")),
     path("api/v1/apartments/", include("core_apps.apartments.urls")),
     path("api/v1/issues/", include("core_apps.issues.urls")),

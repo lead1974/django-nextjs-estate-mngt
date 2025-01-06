@@ -24,15 +24,18 @@ export default function useSocialAuth(
 		const code = searchParams.get("code");
 
 		if (state && code && !effectRan.current) {
+			console.log('Attempting social auth with:', { provider, state, code });
 			authenticate({ provider, state, code })
 				.unwrap()
-				.then(() => {
+				.then((response) => {
+					console.log('Social auth success:', response);
 					dispatch(setAuth());
 					toast.success("Logged in successfully");
 					router.push("/welcome");
 				})
-				.catch(() => {
-					toast.error("Login Failed, Try Again!");
+				.catch((error) => {
+					console.error('Social auth error details:', error);
+					toast.error(error.data?.detail || "Login Failed, Try Again!");
 					router.push("/login");
 				});
 		}

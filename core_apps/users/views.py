@@ -7,6 +7,7 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from social_core.exceptions import AuthException
 
 logger = logging.getLogger(__name__)
 
@@ -95,30 +96,51 @@ class CustomTokenRefreshView(TokenRefreshView):
 
 class CustomProviderAuthView(ProviderAuthView):
     def post(self, request: Request, *args, **kwargs) -> Response:
-        provider_res = super().post(request, *args, **kwargs)
+        try:
+            logger.info(f"Starting social auth for provider: {kwargs.get('provider')}")
+            logger.debug(f"Social auth request data: {request.data}")
+            
+            provider_res = super().post(request, *args, **kwargs)
+            
+            if provider_res.status_code == status.HTTP_201_CREATED:
+                access_token = provider_res.data.get("access")
+                refresh_token = provider_res.data.get("refresh")
 
-        if provider_res.status_code == status.HTTP_201_CREATED:
-            access_token = provider_res.data.get("access")
-            refresh_token = provider_res.data.get("refresh")
+                if access_token and refresh_token:
+                    set_auth_cookies(
+                        provider_res, access_token=access_token, refresh_token=refresh_token
+                    )
 
-            if access_token and refresh_token:
-                set_auth_cookies(
-                    provider_res, access_token=access_token, refresh_token=refresh_token
-                )
+                    provider_res.data.pop("access", None)
+                    provider_res.data.pop("refresh", None)
 
-                provider_res.data.pop("access", None)
-                provider_res.data.pop("refresh", None)
-
-                provider_res.data["message"] = "You are logged in Successful."
+                    provider_res.data["message"] = "You are logged in Successfully."
+                    logger.info("Social auth successful")
+                else:
+                    provider_res.data["message"] = (
+                        "Access or refresh token not found in provider response"
+                    )
+                    logger.error(
+                        "Access or refresh token not found in provider response data"
+                    )
             else:
-                provider_res.data["message"] = (
-                    "Access or refresh token not found in provider response"
-                )
-                logger.error(
-                    "Access or refresh token not found in provider response data"
-                )
-
-        return provider_res
+                logger.error(f"Social auth failed with status {provider_res.status_code}")
+                logger.error(f"Response data: {provider_res.data}")
+                
+            return provider_res
+            
+        except AuthException as e:
+            logger.error(f"Authentication error: {str(e)}")
+            return Response(
+                {"detail": str(e)},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        except Exception as e:
+            logger.exception("Error during social authentication")
+            return Response(
+                {"detail": "An error occurred during authentication. Please try again."},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
 
 class LogoutAPIView(APIView):
