@@ -1,4 +1,4 @@
-import cloudinary.uploader
+import cloudinary.uploader # type: ignore
 
 from core_apps.profiles.models import Profile
 

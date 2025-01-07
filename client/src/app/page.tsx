@@ -30,7 +30,7 @@ export default function HomePage() {
 					<p className="my-8 text-2xl text-teal-300 sm:text-4xl">
 						Are you a tenant? Or an existing tenant?
 					</p>
-					<Link href="/register" prefetch={false}>
+					<Link href="/welcome" prefetch={false}>
 						<button className="bg-asparagus rounded-3xl px-4 py-2 text-lg font-semibold text-white hover:bg-lime-700 sm:px-6 sm:text-2xl">
 							<span className="inline-flex items-center">
 								Create Your Account
