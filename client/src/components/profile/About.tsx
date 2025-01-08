@@ -15,6 +15,7 @@ import {
 	MapPinnedIcon,
 	Star,
 	UserRoundCheck,
+	FileText,
 } from "lucide-react";
 import ProtectedRoute from "../shared/ProtectedRoutes";
 import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
@@ -90,15 +91,11 @@ function AboutContent() {
 						label="Average Rating"
 						value={profile?.average_rating?.toString() || ""}
 					/>
-
-					<div className="prose max-w-none">
-						<p>
-							<span className="tab-font">Bio:</span>
-							<span className="dark:text-babyPowder">
-								{profile?.bio || "You have not added any bio info yet!"}
-							</span>
-						</p>
-					</div>
+					<ProfileItem
+						icon={<FileText className="tab-icon" />}
+						label="Bio"
+						value={profile?.bio || "You have not added any bio info yet!"}
+					/>
 				</div>
 			</div>
 		</TabsContent>

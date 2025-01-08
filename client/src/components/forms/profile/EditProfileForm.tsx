@@ -19,6 +19,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import Spinner from "@/components/shared/Spinner";
 import { Button } from "@/components/ui/button";
+import { UserSearch } from "lucide-react";
 
 export default function EditProfileForm() {
 	const { data } = useGetUserProfileQuery();
@@ -92,7 +93,7 @@ export default function EditProfileForm() {
 					register={register}
 					errors={errors}
 					placeholder="Username"
-					startIcon={<UserCheck2 className="dark:text-babyPowder size-8" />}
+					endIcon={<UserCheck2 className="dark:text-babyPowder size-8" />}
 				/>
 
 				<FormFieldComponent
@@ -101,7 +102,7 @@ export default function EditProfileForm() {
 					register={register}
 					errors={errors}
 					placeholder="First Name"
-					startIcon={<Contact2Icon className="dark:text-babyPowder size-8" />}
+					endIcon={<Contact2Icon className="dark:text-babyPowder size-8" />}
 				/>
 				<FormFieldComponent
 					label="Last Name"
@@ -109,7 +110,7 @@ export default function EditProfileForm() {
 					register={register}
 					errors={errors}
 					placeholder="Last Name"
-					startIcon={<Contact2Icon className="dark:text-babyPowder size-8" />}
+					endIcon={<Contact2Icon className="dark:text-babyPowder size-8" />}
 				/>
 				<GenderSelectField setValue={setValue} control={control} />
 				<OccupationSelectField setValue={setValue} control={control} />
@@ -119,7 +120,7 @@ export default function EditProfileForm() {
 					register={register}
 					errors={errors}
 					placeholder="What's your country"
-					startIcon={<Map className="dark:text-babyPowder size-8" />}
+					endIcon={<Map className="dark:text-babyPowder size-8" />}
 				/>
 
 				<FormFieldComponent
@@ -128,7 +129,7 @@ export default function EditProfileForm() {
 					register={register}
 					errors={errors}
 					placeholder="City"
-					startIcon={<MapPinnedIcon className="dark:text-babyPowder size-8" />}
+					endIcon={<MapPinnedIcon className="dark:text-babyPowder size-8" />}
 				/>
 
 				<FormFieldComponent
@@ -138,6 +139,7 @@ export default function EditProfileForm() {
 					errors={errors}
 					placeholder="Bio"
 					isTextArea
+					endIcon={<MapPinnedIcon className="dark:text-babyPowder size-8" />}
 				/>
 				<Label className="h4-semibold dark:text-babyPowder" htmlFor="avatar">
 					Avatar
@@ -158,6 +160,7 @@ export default function EditProfileForm() {
 							<Spinner size="sm" />
 						</div>
 					)}
+					<UserSearch className="my-2 dark:text-babyPowder size-8" />
 				</div>
 				<Button
 					type="submit"
