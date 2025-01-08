@@ -24,7 +24,6 @@ export default function EditProfileForm() {
 	const { data } = useGetUserProfileQuery();
 
 	const profile = data?.profile;
-	const [avatar, setAvatar] = useState("");
 	const [uploading, setUploading] = useState(false);
 
 	const [updateUserProfile, { isLoading }] = useUpdateUserProfileMutation();
@@ -60,12 +59,7 @@ export default function EditProfileForm() {
 					"Content-Type": "multipart/form-data",
 				},
 			};
-			const { data } = await axios.patch(
-				"/api/v1/profiles/user/avatar/",
-				formData,
-				config,
-			);
-			setAvatar(data);
+			await axios.patch("/api/v1/profiles/user/avatar/", formData, config);
 			setUploading(false);
 		} catch (error) {
 			console.error("Error uploading file:", error);

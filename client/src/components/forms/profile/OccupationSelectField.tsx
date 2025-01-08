@@ -14,7 +14,7 @@ const ClientOnly = dynamic<{ children: React.ReactNode }>(
 	{ ssr: false },
 );
 
-function isOccupation(value: any): value is Occupation {
+function isOccupation(value: unknown): value is Occupation {
 	return [
 		"mason",
 		"carpenter",
@@ -24,7 +24,7 @@ function isOccupation(value: any): value is Occupation {
 		"electrician",
 		"hvac",
 		"tenant",
-	].includes(value);
+	].includes(value as string);
 }
 
 interface OccupationSelectFieldProps {
@@ -70,7 +70,9 @@ export default function OccupationSelectField({
 								value={occupationOptions.find(
 									(option) => option.value === field.value,
 								)}
-								onChange={(option) => field.onChange(option?.value)}
+								onChange={(newValue) =>
+									field.onChange((newValue as { value: Occupation })?.value)
+								}
 								instanceId="occupation-select"
 								styles={customStyles}
 							/>

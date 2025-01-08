@@ -14,8 +14,8 @@ const ClientOnly = dynamic<{ children: React.ReactNode }>(
 
 type Gender = "male" | "female" | "other";
 
-function isGender(value: any): value is Gender {
-	return ["male", "female", "other"].includes(value);
+function isGender(value: unknown): value is Gender {
+	return ["male", "female", "other"].includes(value as string);
 }
 
 const genderOptions = [
@@ -67,7 +67,9 @@ export default function GenderSelectField({
 								value={genderOptions.find(
 									(option) => option.value === field.value,
 								)}
-								onChange={(option) => field.onChange(option?.value)}
+								onChange={(newValue) =>
+									field.onChange((newValue as { value: Gender })?.value)
+								}
 								instanceId="gender-select"
 								styles={customStyles}
 							/>

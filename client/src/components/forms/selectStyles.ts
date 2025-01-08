@@ -1,5 +1,7 @@
-const customStyles = {
-	control: (provided: any, state: any) => ({
+import { StylesConfig } from "react-select";
+
+const customStyles: StylesConfig = {
+	control: (provided) => ({
 		...provided,
 		backgroundColor: "var(--select-background-color)",
 		borderColor: "var(--select-border-color)",
@@ -8,7 +10,7 @@ const customStyles = {
 			borderColor: "var(--select-border-hover-color)",
 		},
 	}),
-	option: (provided: any, state: any) => ({
+	option: (provided, state) => ({
 		...provided,
 		backgroundColor: state.isSelected
 			? "var(--select-option-selected-background-color)"
@@ -19,11 +21,11 @@ const customStyles = {
 		},
 	}),
 
-	singleValue: (provided: any) => ({
+	singleValue: (provided) => ({
 		...provided,
 		color: "var(--select-value-text-color)",
 	}),
-	menu: (provided: any) => ({
+	menu: (provided) => ({
 		...provided,
 		backgroundColor: "var(--select-menu-background-color)",
 	}),
