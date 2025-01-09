@@ -24,8 +24,17 @@ const ClientOnly = dynamic<{ children: React.ReactNode }>(
 );
 
 export default function CreateIssueForm() {
-	const { data } = useGetMyApartmentQuery();
+	const {
+		data,
+		isLoading: isLoadingApartment,
+		error: apartmentError,
+	} = useGetMyApartmentQuery();
 	const apartment = data?.apartment;
+
+	console.log("Apartment Data:", data);
+	console.log("Apartment:", apartment);
+	console.log("Loading:", isLoadingApartment);
+	console.log("Error:", apartmentError);
 
 	const [reportIssue, { isLoading }] = useReportIssueMutation();
 	const router = useRouter();
@@ -42,7 +51,10 @@ export default function CreateIssueForm() {
 	});
 
 	const onSubmit = async (formValues: TIssueCreateSchema) => {
+		console.log("Submitting with apartment:", apartment);
+
 		if (!apartment?.id) {
+			console.log("No apartment ID found:", apartment);
 			toast.error(
 				"Create your apartment first in your profile, before creating an issue",
 			);
@@ -109,7 +121,7 @@ export default function CreateIssueForm() {
 										)}
 										onChange={(val) => onChange(val?.value)}
 										onBlur={onBlur}
-										placeholder="Select issue status"
+										placeholder="Select an issue status"
 										instanceId="status-select"
 										styles={customStyles}
 									/>
@@ -140,7 +152,7 @@ export default function CreateIssueForm() {
 										)}
 										onChange={(val) => onChange(val?.value)}
 										onBlur={onBlur}
-										placeholder="Select issue priority"
+										placeholder="Select an issue priority"
 										instanceId="priority-select"
 										styles={customStyles}
 									/>

@@ -37,5 +37,10 @@ class ApartmentDetailAPIView(generics.RetrieveAPIView):
     object_label = "apartment"
 
     def get_object(self) -> Apartment:
-        queryset = self.request.user.apartment.all()
-        return generics.get_object_or_404(queryset)
+        apartment = self.request.user.apartment.first()
+        if not apartment:
+            return Response(
+                {"message": "No apartment found for this user"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+        return apartment
