@@ -167,4 +167,10 @@ npx shadcn@latest add dropdown-menu badge button avatar form card input label me
 
 npm install @radix-ui/react-icons
 
+# Adding new API endpint for 'report' in this nextjs "clienet" project
+1. Add typedTag to baseApiSlice.ts : 'Report'
+2. Add new folder under lib/redux/features/reports
+3. Add new validattionSchema to 'reports' : ReportCreateSchema.ts
+4. Add new report schema to index.ts 
+5. Add new endpoint to reportApiSlice.ts
 
