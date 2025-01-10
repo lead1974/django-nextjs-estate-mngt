@@ -21,7 +21,7 @@ import {
 	Map,
 	School,
 } from "lucide-react";
-import { formatDate } from "@/utils/formatDate";
+import { formatDate } from "@/utils";
 import ProtectedRoute from "../shared/ProtectedRoutes";
 import { Avatar, AvatarImage } from "../ui/avatar";
 import { useAppSelector } from "@/lib/redux/hooks/typedHooks";
@@ -123,7 +123,7 @@ function TenantCardContent() {
 					<p>No tenants found</p>
 				)}
 			</div>
-			<PaginationSection totalPages={totalPages} />
+			<PaginationSection totalPages={totalPages} entityType="user" />
 		</div>
 	);
 }

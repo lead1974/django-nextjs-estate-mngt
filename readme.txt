@@ -166,6 +166,7 @@ npm i next-themes
 npx shadcn@latest add dropdown-menu badge button avatar form card input label menubar pagination skeleton sheet tabs textarea select
 
 npm install @radix-ui/react-icons
+npm i date-fns
 
 # Adding new API endpint for 'report' in this nextjs "clienet" project
 1. Add typedTag to baseApiSlice.ts : 'Report'
