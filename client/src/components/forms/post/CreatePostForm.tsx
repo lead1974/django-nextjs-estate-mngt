@@ -84,7 +84,7 @@ function CreatePostFormContent() {
 					register={register}
 					errors={errors}
 					placeholder="Post Title"
-					startIcon={<FileText className="dark:text-babyPowder size-8" />}
+					endIcon={<FileText className="dark:text-babyPowder size-8" />}
 				/>
 				<FormFieldComponent
 					label="Body"
