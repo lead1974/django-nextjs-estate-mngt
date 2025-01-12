@@ -8,8 +8,7 @@ import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
 import { toast } from "react-toastify";
-import { statusOptions } from "@/constants";
-import customStyles from "../selectStyles";
+import createCustomStyles from "../selectStyles";
 import { Button } from "@/components/ui/button";
 import Spinner from "@/components/shared/Spinner";
 
@@ -18,14 +17,26 @@ const ClientOnly = dynamic<{ children: React.ReactNode }>(
 	{ ssr: false },
 );
 
-interface UpdateParamsProps {
-	params: {
-		id: string;
-	};
+type StatusType = "reported" | "resolved" | "in_progress";
+
+interface StatusOption {
+	value: StatusType;
+	label: string;
 }
 
-export default function UpdateIssueForm({ params }: UpdateParamsProps) {
-	const issueId = params.id;
+const statusOptions: StatusOption[] = [
+	{ value: "reported", label: "Reported" },
+	{ value: "resolved", label: "Resolved" },
+	{ value: "in_progress", label: "In Progress" },
+];
+
+const statusStyles = createCustomStyles<StatusOption>();
+
+interface UpdateIssueFormProps {
+	issueId: string;
+}
+
+export default function UpdateIssueForm({ issueId }: UpdateIssueFormProps) {
 	const [updateIssue, { isLoading }] = useUpdateIssueMutation();
 	const router = useRouter();
 
@@ -73,17 +84,18 @@ export default function UpdateIssueForm({ params }: UpdateParamsProps) {
 								name="status"
 								control={control}
 								render={({ field: { onChange, onBlur, value } }) => (
-									<Select
+									<Select<StatusOption>
 										className="mt-1 w-full"
 										options={statusOptions}
-										value={statusOptions.find(
-											(option) => option.value === value,
-										)}
-										onChange={(val) => onChange(val?.value)}
+										value={
+											statusOptions.find((option) => option.value === value) ||
+											null
+										}
+										onChange={(newValue) => onChange(newValue?.value)}
 										onBlur={onBlur}
 										placeholder="Update the Issue Status"
 										instanceId="issue-status-select"
-										styles={customStyles}
+										styles={statusStyles}
 									/>
 								)}
 							/>

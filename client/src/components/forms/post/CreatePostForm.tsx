@@ -37,7 +37,7 @@ function CreatePostFormContent() {
 
 	const handleInputKeyDown = (
 		e: React.KeyboardEvent<HTMLInputElement>,
-		field: any,
+		field: { name: string; value: string[] },
 	) => {
 		if (e.key === "Enter" && field.name === "tags") {
 			e.preventDefault();
@@ -53,7 +53,7 @@ function CreatePostFormContent() {
 		}
 	};
 
-	const handleRemoveTag = (tagToRemove: string, field: any) => {
+	const handleRemoveTag = (tagToRemove: string, field: { value: string[] }) => {
 		const updatedTags = field.value.filter(
 			(tag: string) => tag !== tagToRemove,
 		);

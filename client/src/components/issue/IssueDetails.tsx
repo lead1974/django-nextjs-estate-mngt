@@ -62,24 +62,24 @@ export default function IssueDetails({ params }: IssueDetailsProps) {
 				linkHref="/profile"
 			/>
 
-			<CardHeader className="border-b-eerieBlack flex flex-row justify-between gap-4 border-b p-4 sm:p-6 md:flex-row md:items-center md:gap-6 ">
+			<CardHeader className="border-b-eerieBlack flex flex-row justify-between gap-4 border-b p-4 sm:p-6 md:flex-row md:items-center md:gap-6">
 				<div className="grid gap-0.5">
 					<CardTitle className="dark:text-platinum">
-						<p className="flex items-center space-x-2">
+						<div className="flex items-center space-x-2">
 							<Hotel className="tab-icon" />
 							<span className="dark:text-babyPowder font-bold">
 								Apartment Number:{" "}
 							</span>
 							<span className="text-2xl">{issue?.apartment_unit}</span>
-						</p>
+						</div>
 					</CardTitle>
 
 					<CardDescription className="mt-2">
-						<p className="flex items-center space-x-2">
+						<span className="flex items-center space-x-2">
 							<CheckCheck className="tab-icon" />
 							<span className="text-xl-font-baby">Occupied By: </span>
 							<span className="text-xl-font-baby">{issue?.reported_by}</span>
-						</p>
+						</span>
 					</CardDescription>
 				</div>
 
@@ -111,34 +111,34 @@ export default function IssueDetails({ params }: IssueDetailsProps) {
 
 			<CardContent className="border-b-eerieBlack border-b">
 				<CardDescription className="mt-3">
-					<div className="flex items-center space-x-2">
+					<span className="flex items-center space-x-2">
 						<CircleDot className="tab-icon" />
 						<span className="text-xl-font-baby">{issue?.description}</span>
-					</div>
+					</span>
 				</CardDescription>
 			</CardContent>
 
 			<CardFooter className="mt-2 flex flex-row justify-between dark:text-lime-500">
-				<p className="text-lg">
+				<div className="text-lg">
 					assigned to:
 					<span className="dark:text-platinum">
 						{issue?.assigned_to || "Not assigned Yet!"}
 					</span>
-				</p>
-				<p className="text-lg">
+				</div>
+				<div className="text-lg">
 					Status:
 					<span className="dark:text-platinum">{issue?.status}</span>
-				</p>
-				<p className="text-lg">
+				</div>
+				<div className="text-lg">
 					Priority:
 					<span className="dark:text-platinum">{issue?.priority}</span>
-				</p>
-				<p className="flex flex-row items-center">
+				</div>
+				<div className="flex flex-row items-center">
 					<EyeIcon className="mr-1 size-5" />
 					<span className="dark:text-platinum text-lg">
 						View Count: {issue?.view_count}
 					</span>
-				</p>
+				</div>
 			</CardFooter>
 		</Card>
 	);

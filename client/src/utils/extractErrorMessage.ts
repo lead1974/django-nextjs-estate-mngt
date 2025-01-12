@@ -1,7 +1,17 @@
+interface ErrorData {
+	detail?: string;
+	status_code?: string;
+	[key: string]: unknown;
+}
+
+interface ErrorResponse {
+	data: ErrorData | string;
+}
+
 export default function extractErrorMessage(error: unknown): string | null {
 	// Handle HTML responses (like 502 Bad Gateway)
 	if (typeof error === "object" && error !== null && "data" in error) {
-		const errorData = (error as { data: any }).data;
+		const errorData = (error as ErrorResponse).data;
 
 		// If the error is HTML (like 502 Bad Gateway)
 		if (typeof errorData === "string" && errorData.includes("<!DOCTYPE html>")) {
@@ -22,7 +32,7 @@ export default function extractErrorMessage(error: unknown): string | null {
 					if (Array.isArray(fieldError)) {
 						messages.push(...fieldError);
 					} else if (typeof fieldError === "object" && fieldError !== null) {
-						Object.values(fieldError).forEach((errorMessages: any) => {
+						Object.values(fieldError).forEach((errorMessages: string[]) => {
 							if (Array.isArray(errorMessages)) {
 								messages.push(...errorMessages);
 							}

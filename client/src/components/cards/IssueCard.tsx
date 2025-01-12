@@ -40,36 +40,36 @@ export default function IssueCard({ issue }: IssueCardProps) {
 				</CardHeader>
 				<CardContent>
 					<CardDescription className="dark:text-platinum">
-						<p className="h4-semibold">
+						<span className="block h4-semibold">
 							{issue.description.length > 35
 								? `${issue.description.substring(0, 35)}....`
 								: issue.description}
-						</p>
+						</span>
 					</CardDescription>
 				</CardContent>
 				<CardContent>
 					<CardDescription className="dark:text-platinum">
-						<p className="flex items-center space-x-2">
+						<span className="flex items-center space-x-2">
 							<Hotel className="tab-icon" />
 							<span className="tab-font">Apartment Number:</span>
 							<span className="text-lg">{issue.apartment_unit}</span>
-						</p>
+						</span>
 					</CardDescription>
 				</CardContent>
 				<CardFooter className="dark:text-babyPowder flex flex-row justify-between">
-					<p>
+					<div>
 						<span className="mr-0.5 font-bold">Status: </span>
 						<Badge className="bg-eerieBlack text-babyPowder dark:bg-electricIndigo dark:text-babyPowder">
 							{issue.status}
 						</Badge>
-					</p>
+					</div>
 
-					<p>
+					<div>
 						<span className="mr-0.5 font-bold">Priority: </span>
 						<Badge className="bg-eerieBlack text-babyPowder dark:text-veryBlack dark:bg-lime-500">
 							{issue.priority}
 						</Badge>
-					</p>
+					</div>
 				</CardFooter>
 			</Card>
 		</Link>

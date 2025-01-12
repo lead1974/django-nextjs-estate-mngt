@@ -76,10 +76,22 @@ class UpvotePostSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         user = self.context["request"].user
+        
+        # Remove downvote if exists
+        if user in instance.downvoted_by.all():
+            instance.downvoted_by.remove(user)
+            instance.downvotes = F("downvotes") - 1
+        
+        # Toggle upvote
         if user not in instance.upvoted_by.all():
             instance.upvoted_by.add(user)
-            instance.upvotes += 1
-            instance.save()
+            instance.upvotes = F("upvotes") + 1
+        else:
+            instance.upvoted_by.remove(user)
+            instance.upvotes = F("upvotes") - 1
+
+        instance.save()
+        instance.refresh_from_db()
         return instance
 
 
@@ -90,9 +102,13 @@ class DownvotePostSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         user = self.context["request"].user
+        
+        # Remove upvote if exists
         if user in instance.upvoted_by.all():
             instance.upvoted_by.remove(user)
             instance.upvotes = F("upvotes") - 1
+        
+        # Toggle downvote
         if user not in instance.downvoted_by.all():
             instance.downvoted_by.add(user)
             instance.downvotes = F("downvotes") + 1

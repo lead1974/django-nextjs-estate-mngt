@@ -1,36 +1,49 @@
-import { occupationOptions } from "@/constants";
 import { useGetUserProfileQuery } from "@/lib/redux/features/users/usersApiSlice";
 import { TProfileSchema } from "@/lib/validationSchemas";
-import { Occupation } from "@/types";
-import { Briefcase } from "lucide-react";
+import { WrenchIcon } from "lucide-react";
 import dynamic from "next/dynamic";
 import React, { useEffect } from "react";
 import { Control, Controller, UseFormSetValue } from "react-hook-form";
 import Select from "react-select";
-import customStyles from "../selectStyles";
+import createCustomStyles from "../selectStyles";
 
 const ClientOnly = dynamic<{ children: React.ReactNode }>(
 	() => Promise.resolve(({ children }) => <>{children}</>),
 	{ ssr: false },
 );
 
-function isOccupation(value: unknown): value is Occupation {
-	return [
-		"mason",
-		"carpenter",
-		"plumber",
-		"roofer",
-		"painter",
-		"electrician",
-		"hvac",
-		"tenant",
-	].includes(value as string);
+type Occupation =
+	| "mason"
+	| "carpenter"
+	| "plumber"
+	| "roofer"
+	| "painter"
+	| "electrician"
+	| "hvac"
+	| "tenant";
+
+interface OccupationOption {
+	value: Occupation;
+	label: string;
 }
+
+const occupationOptions: OccupationOption[] = [
+	{ value: "mason", label: "Mason" },
+	{ value: "carpenter", label: "Carpenter" },
+	{ value: "plumber", label: "Plumber" },
+	{ value: "roofer", label: "Roofer" },
+	{ value: "painter", label: "Painter" },
+	{ value: "electrician", label: "Electrician" },
+	{ value: "hvac", label: "HVAC" },
+	{ value: "tenant", label: "Tenant" },
+];
 
 interface OccupationSelectFieldProps {
 	setValue: UseFormSetValue<TProfileSchema>;
 	control: Control<TProfileSchema>;
 }
+
+const occupationStyles = createCustomStyles<OccupationOption>();
 
 export default function OccupationSelectField({
 	setValue,
@@ -40,12 +53,11 @@ export default function OccupationSelectField({
 	const profile = profileData?.profile;
 
 	useEffect(() => {
-		if (profile?.gender) {
+		if (profile?.occupation) {
 			const occupationValue = occupationOptions.find(
 				(option) => option.value === profile.occupation,
 			);
-
-			if (occupationValue && isOccupation(occupationValue.value)) {
+			if (occupationValue) {
 				setValue("occupation", occupationValue.value);
 			}
 		}
@@ -69,16 +81,14 @@ export default function OccupationSelectField({
 								value={occupationOptions.find(
 									(option) => option.value === field.value,
 								)}
-								onChange={(newValue) =>
-									field.onChange((newValue as { value: Occupation })?.value)
-								}
+								onChange={(newValue) => field.onChange(newValue?.value)}
 								instanceId="occupation-select"
-								styles={customStyles}
+								styles={occupationStyles}
 							/>
 						)}
 					/>
 				</ClientOnly>
-				<Briefcase className="dark:text-babyPowder size-8" />
+				<WrenchIcon className="dark:text-babyPowder size-8" />
 			</div>
 		</div>
 	);

@@ -12,9 +12,8 @@ import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { FormFieldComponent } from "../FormFieldComponent";
 import { FlagIcon } from "lucide-react";
-import Select from "react-select";
-import { priorityOptions, statusOptions } from "@/constants";
-import customStyles from "../selectStyles";
+import Select, { SingleValue } from "react-select";
+import createCustomStyles from "../selectStyles";
 import { Button } from "@/components/ui/button";
 import Spinner from "@/components/shared/Spinner";
 
@@ -23,18 +22,32 @@ const ClientOnly = dynamic<{ children: React.ReactNode }>(
 	{ ssr: false },
 );
 
-export default function CreateIssueForm() {
-	const {
-		data,
-		isLoading: isLoadingApartment,
-		error: apartmentError,
-	} = useGetMyApartmentQuery();
-	const apartment = data?.apartment;
+type StatusType = "reported" | "resolved" | "in_progress";
+type PriorityType = "low" | "medium" | "high";
 
-	console.log("Apartment Data:", data);
-	console.log("Apartment:", apartment);
-	console.log("Loading:", isLoadingApartment);
-	console.log("Error:", apartmentError);
+interface SelectOption<T> {
+	value: T;
+	label: string;
+}
+
+const statusOptions: SelectOption<StatusType>[] = [
+	{ value: "reported", label: "Reported" },
+	{ value: "resolved", label: "Resolved" },
+	{ value: "in_progress", label: "In Progress" },
+];
+
+const priorityOptions: SelectOption<PriorityType>[] = [
+	{ value: "low", label: "Low" },
+	{ value: "medium", label: "Medium" },
+	{ value: "high", label: "High" },
+];
+
+const statusStyles = createCustomStyles<SelectOption<StatusType>>();
+const priorityStyles = createCustomStyles<SelectOption<PriorityType>>();
+
+export default function CreateIssueForm() {
+	const { data } = useGetMyApartmentQuery();
+	const apartment = data?.apartment;
 
 	const [reportIssue, { isLoading }] = useReportIssueMutation();
 	const router = useRouter();
@@ -51,10 +64,7 @@ export default function CreateIssueForm() {
 	});
 
 	const onSubmit = async (formValues: TIssueCreateSchema) => {
-		console.log("Submitting with apartment:", apartment);
-
 		if (!apartment?.id) {
-			console.log("No apartment ID found:", apartment);
 			toast.error(
 				"Create your apartment first in your profile, before creating an issue",
 			);
@@ -109,21 +119,24 @@ export default function CreateIssueForm() {
 					</label>
 					<div className="mt-1 flex items-center space-x-3 text-sm">
 						<ClientOnly>
-							<Controller
+							<Controller<TIssueCreateSchema>
 								name="status"
 								control={control}
 								render={({ field: { onChange, onBlur, value } }) => (
-									<Select
+									<Select<SelectOption<StatusType>>
 										className="mt-1 w-full"
 										options={statusOptions}
-										value={statusOptions.find(
-											(option) => option.value === value,
-										)}
-										onChange={(val) => onChange(val?.value)}
+										value={
+											statusOptions.find((option) => option.value === value) ||
+											null
+										}
+										onChange={(
+											newValue: SingleValue<SelectOption<StatusType>>,
+										) => onChange(newValue?.value)}
 										onBlur={onBlur}
 										placeholder="Select an issue status"
 										instanceId="status-select"
-										styles={customStyles}
+										styles={statusStyles}
 									/>
 								)}
 							/>
@@ -140,21 +153,25 @@ export default function CreateIssueForm() {
 					</label>
 					<div className="mt-1 flex items-center space-x-3 text-sm">
 						<ClientOnly>
-							<Controller
+							<Controller<TIssueCreateSchema>
 								name="priority"
 								control={control}
 								render={({ field: { onChange, onBlur, value } }) => (
-									<Select
+									<Select<SelectOption<PriorityType>>
 										className="mt-1 w-full"
 										options={priorityOptions}
-										value={priorityOptions.find(
-											(option) => option.value === value,
-										)}
-										onChange={(val) => onChange(val?.value)}
+										value={
+											priorityOptions.find(
+												(option) => option.value === value,
+											) || null
+										}
+										onChange={(
+											newValue: SingleValue<SelectOption<PriorityType>>,
+										) => onChange(newValue?.value)}
 										onBlur={onBlur}
 										placeholder="Select an issue priority"
 										instanceId="priority-select"
-										styles={customStyles}
+										styles={priorityStyles}
 									/>
 								)}
 							/>

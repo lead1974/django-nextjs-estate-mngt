@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import React, { useEffect } from "react";
 import { Control, Controller, UseFormSetValue } from "react-hook-form";
 import Select from "react-select";
-import customStyles from "../selectStyles";
+import createCustomStyles from "../selectStyles";
 
 const ClientOnly = dynamic<{ children: React.ReactNode }>(
 	() => Promise.resolve(({ children }) => <>{children}</>),
@@ -28,6 +28,13 @@ interface GenderSelectFieldProps {
 	setValue: UseFormSetValue<TProfileSchema>;
 	control: Control<TProfileSchema>;
 }
+
+interface GenderOption {
+	value: string;
+	label: string;
+}
+
+const genderStyles = createCustomStyles<GenderOption>();
 
 export default function GenderSelectField({
 	setValue,
@@ -70,7 +77,7 @@ export default function GenderSelectField({
 									field.onChange((newValue as { value: Gender })?.value)
 								}
 								instanceId="gender-select"
-								styles={customStyles}
+								styles={genderStyles}
 							/>
 						)}
 					/>
